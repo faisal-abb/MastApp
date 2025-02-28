@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Microsoft.Maui.Controls;
 
 namespace MastApp
@@ -8,6 +9,20 @@ namespace MastApp
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private async void onShowMessageClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string message = NativeMethods.printHello(); // FIX: No need to use `IntPtr`
+                Console.WriteLine(message);
+                await DisplayAlert("Native Output", message, "OK"); // Show output in alert
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to execute native method: {ex.Message}", "OK");
+            }
         }
 
         private void OnAddClicked(object sender, EventArgs e)

@@ -9,7 +9,8 @@
         <Button Text="Subtract" Clicked="OnSubtractClicked"/>
         <Button Text="Multiply" Clicked="OnMultiplyClicked"/>
         <Button Text="Divide" Clicked="OnDivideClicked"/>
-        <Button Text="Show Message" Clicked="onShowMessageClicked" />
         <Label x:Name="ResultLabel" Text="Result: " FontSize="18" TextColor="Blue"/>
+        <Label x:Name="DllPathLabel" Text="DLL Path: " FontSize="14" TextColor="Gray"/>
+
     </VerticalStackLayout>
 </ContentPage>

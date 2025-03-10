@@ -5,19 +5,13 @@ namespace MastApp;
 
 internal static partial class NativeMethods
 {
-    private const string DllName = "calculator.dll";
+    private const string DllName = "calculatorWrapper.dll";
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     private static extern uint GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, uint nSize);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-    static NativeMethods()
-    {
-        string loadedPath = GetLoadedDllPath();
-        Console.WriteLine($"Loaded DLL Path: {loadedPath}");
-    }
 
     public static string GetLoadedDllPath()
     {
@@ -32,25 +26,24 @@ internal static partial class NativeMethods
         return path.ToString();
     }
 
-
-    [LibraryImport(DllName, EntryPoint = "Add")]
+    [LibraryImport(DllName, EntryPoint = "AddWrapper")]
     [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-    internal static partial double Add(double a, double b); // FIX: Return type should be `double`
+    internal static partial double AddWrapper(double a, double b); // FIX: Return type should be `double`
 
-    [LibraryImport(DllName, EntryPoint = "Subtract")]
+    [LibraryImport(DllName, EntryPoint = "SubtractWrapper")]
     [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-    internal static partial double Subtract(double a, double b); // FIX
+    internal static partial double SubtractWrapper(double a, double b); // FIX
 
-    [LibraryImport(DllName, EntryPoint = "Multiply")]
+    [LibraryImport(DllName, EntryPoint = "MultiplyWrapper")]
     [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-    internal static partial double Multiply(double a, double b); // FIX
+    internal static partial double MultiplyWrapper(double a, double b); // FIX
 
-    [LibraryImport(DllName, EntryPoint = "Divide")]
+    [LibraryImport(DllName, EntryPoint = "DivideWrapper")]
     [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-    internal static partial double Divide(double a, double b); // FIX
+    internal static partial double DivideWrapper(double a, double b); // FIX
 
-    [LibraryImport(DllName, EntryPoint = "printHello")]
-    [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
-    [return: MarshalAs(UnmanagedType.LPStr)] // FIX: Marshal return type correctly
-    public static partial string printHello();
+    //[LibraryImport(DllName, EntryPoint = "printHello")]
+    //[UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+    //[return: MarshalAs(UnmanagedType.LPStr)] // FIX: Marshal return type correctly
+    //public static partial string printHello();
 }

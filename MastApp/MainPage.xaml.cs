@@ -11,27 +11,30 @@ namespace MastApp
             InitializeComponent();
         }
 
-        private async void onShowMessageClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                string message = NativeMethods.printHello(); // FIX: No need to use `IntPtr`
-                Console.WriteLine(message);
-                await DisplayAlert("Native Output", message, "OK"); // Show output in alert
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Failed to execute native method: {ex.Message}", "OK");
-            }
-        }
+        //private async void onShowMessageClicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        string message = NativeMethods.printHello(); // FIX: No need to use `IntPtr`
+        //        Console.WriteLine(message);
+        //        await DisplayAlert("Native Output", message, "OK"); // Show output in alert
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await DisplayAlert("Error", $"Failed to execute native method: {ex.Message}", "OK");
+        //    }
+        //}
 
         private void OnAddClicked(object sender, EventArgs e)
         {
+            string dllPath = NativeMethods.GetLoadedDllPath();
+            DllPathLabel.Text = $"DLL Path: {dllPath}";
+
             if (TryGetInputs(out double a, out double b))
             {
                 try
                 {
-                    double result = NativeMethods.Add(a, b);
+                    double result = NativeMethods.AddWrapper(a, b);
                     ResultLabel.Text = $"Result: {result}";
                     ResultLabel.Text = $"Value of a = {a}, value of b = {b} : Result = {result}";
                 }
@@ -49,7 +52,7 @@ namespace MastApp
             {
                 try
                 {
-                    double result = NativeMethods.Subtract(a, b);
+                    double result = NativeMethods.SubtractWrapper(a, b);
                     Console.WriteLine("Value of a is " + a);
                     Console.WriteLine("Value of b is " + b);
                     ResultLabel.Text = $"Result: {result}";
@@ -68,7 +71,7 @@ namespace MastApp
             {
                 try
                 {
-                    double result = NativeMethods.Multiply(a, b);
+                    double result = NativeMethods.MultiplyWrapper(a, b);
                     Console.WriteLine("Value of a is " + a);
                     Console.WriteLine("Value of b is " + b);
                     ResultLabel.Text = $"Result: {result}";
@@ -92,7 +95,7 @@ namespace MastApp
                 }
                 try
                 {
-                    double result = NativeMethods.Divide(a, b);
+                    double result = NativeMethods.DivideWrapper(a, b);
                     Console.WriteLine("Value of a is " + a);
                     Console.WriteLine("Value of b is "+b);
                     ResultLabel.Text = $"Value of a = {a}, value of b = {b} : Result = {result}";
